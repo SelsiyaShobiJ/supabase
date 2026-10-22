@@ -1,0 +1,361 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Staff Login | Ration Shop Management</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      background: #4b4b4b;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      color: #755943;
+    }
+
+    .login-wrapper {
+      width: 100%;
+      max-width: 360px;
+      min-height: 100vh;
+      padding: 8px 8px 0;
+    }
+
+    .page-label {
+      color: #c4c4c4;
+      font-size: 16px;
+      margin: 0 0 10px;
+    }
+
+    .login-card {
+      min-height: calc(100vh - 40px);
+      background: #f3ece2;
+    }
+
+    .brand {
+      min-height: 96px;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 10px 20px;
+      border-bottom: 2px solid #d4c5b5;
+    }
+
+    .brand-icon {
+      width: 63px;
+      height: 63px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: #ad927c;
+      color: white;
+      font-size: 30px;
+    }
+
+    .brand h1 {
+      font-size: 25px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .brand p {
+      font-size: 21px;
+      color: #ad927c;
+      white-space: nowrap;
+      margin-left: 11px;
+    }
+
+    .login-form {
+      padding: 96px 16px 40px;
+    }
+
+    .field {
+      margin-bottom: 12px;
+    }
+
+    .field input {
+      width: 100%;
+      height: 53px;
+      padding: 0 12px;
+      font-size: 16px;
+      color: #4b4b4b;
+      background: #faf7f2;
+      border: 1px solid #ded9d2;
+      border-radius: 13px;
+      outline: none;
+    }
+
+    .field input:focus {
+      border-color: #ad927c;
+      box-shadow: 0 0 0 2px #ad927c30;
+    }
+
+    .password-box {
+      position: relative;
+    }
+
+    .password-box input {
+      padding-right: 48px;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      border: none;
+      background: transparent;
+      color: #91877f;
+      font-size: 21px;
+      cursor: pointer;
+    }
+
+    .forgot-link {
+      display: inline-block;
+      margin: 0 0 10px 13px;
+      font-size: 13px;
+      color: #928b86;
+      text-decoration: none;
+    }
+
+    .login-button {
+      width: 100%;
+      height: 52px;
+      margin-top: 44px;
+      border: none;
+      border-radius: 14px;
+      background: #ad927c;
+      color: white;
+      font-size: 21px;
+      cursor: pointer;
+    }
+
+    .login-button:hover {
+      background: #967a64;
+    }
+
+    .login-button:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    .message {
+      margin-top: 14px;
+      font-size: 14px;
+      line-height: 1.5;
+      overflow-wrap: anywhere;
+    }
+
+    .message.error {
+      color: #b42318;
+    }
+
+    .message.success {
+      color: #237544;
+    }
+
+    @media (max-width: 360px) {
+      .brand {
+        padding-left: 12px;
+        padding-right: 8px;
+        gap: 7px;
+      }
+
+      .brand h1 {
+        font-size: 22px;
+      }
+
+      .brand p {
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="login-wrapper">
+    <p class="page-label">STAFF login</p>
+
+    <section class="login-card">
+      <header class="brand">
+        <div class="brand-icon" aria-hidden="true">▤</div>
+
+        <div>
+          <h1>Ration Shop</h1>
+          <p>Management</p>
+        </div>
+      </header>
+
+      <form class="login-form" id="loginForm">
+        <div class="field">
+          <input
+            type="text"
+            id="staffId"
+            name="staffId"
+            placeholder="Enter Staff Id"
+            autocomplete="username"
+            required
+          >
+        </div>
+
+        <a href="#" class="forgot-link" id="forgotStaffId">
+          Forget Staff Id ?
+        </a>
+
+        <div class="field password-box">
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Enter password"
+            autocomplete="current-password"
+            required
+          >
+
+          <button
+            type="button"
+            class="toggle-password"
+            id="togglePassword"
+            aria-label="Show password"
+          >◉</button>
+        </div>
+
+        <a href="#" class="forgot-link" id="forgotPassword">
+          Forgot password ?
+        </a>
+
+        <button type="submit" class="login-button" id="loginButton">
+          Login
+        </button>
+
+        <p
+          class="message"
+          id="loginMessage"
+          role="status"
+          aria-live="polite"
+        ></p>
+      </form>
+    </section>
+  </main>
+
+  <script>
+    // Get the HTML elements
+    const loginForm = document.getElementById("loginForm");
+    const staffIdInput = document.getElementById("staffId");
+    const passwordInput = document.getElementById("password");
+    const togglePassword = document.getElementById("togglePassword");
+    const loginButton = document.getElementById("loginButton");
+    const loginMessage = document.getElementById("loginMessage");
+
+    // Show or hide the password
+    togglePassword.addEventListener("click", () => {
+      const isPasswordHidden = passwordInput.type === "password";
+
+      passwordInput.type = isPasswordHidden ? "text" : "password";
+
+      togglePassword.setAttribute(
+        "aria-label",
+        isPasswordHidden ? "Hide password" : "Show password"
+      );
+    });
+
+    // Connect the login form to the Node.js API
+    loginForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const staffId = staffIdInput.value.trim();
+      const password = passwordInput.value;
+
+      if (!staffId || !password) {
+        showMessage("Please enter your staff ID and password.", "error");
+        return;
+      }
+
+      loginButton.disabled = true;
+      loginButton.textContent = "Logging in...";
+      showMessage("Verifying your details...", "");
+
+      try {
+        const response = await fetch("/api/auth/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            staffId: staffId,
+            password: password
+          })
+        });
+
+        const result = await response.json();
+
+        if (!response.ok || !result.success) {
+          showMessage(
+            result.message || "Login failed. Please try again.",
+            "error"
+          );
+          return;
+        }
+
+        showMessage("Login successful!", "success");
+
+        // Dashboard navigation will be added in the next step.
+      } catch (error) {
+        console.error("Login request failed:", error);
+
+        showMessage(
+          "Unable to connect to the server. Please try again.",
+          "error"
+        );
+      } finally {
+        loginButton.disabled = false;
+        loginButton.textContent = "Login";
+      }
+    });
+
+    // Display messages on the page
+    function showMessage(message, type) {
+      loginMessage.textContent = message;
+      loginMessage.className = "message";
+
+      if (type) {
+        loginMessage.classList.add(type);
+      }
+    }
+
+    // Temporary messages for links that are not implemented yet
+    document.getElementById("forgotStaffId").addEventListener(
+      "click",
+      (event) => {
+        event.preventDefault();
+        showMessage(
+          "Please contact your administrator to recover your staff ID.",
+          ""
+        );
+      }
+    );
+
+    document.getElementById("forgotPassword").addEventListener(
+      "click",
+      (event) => {
+        event.preventDefault();
+        showMessage(
+          "Please contact your administrator to reset your password.",
+          ""
+        );
+      }
+    );
+  </script>
+</body>
+</html>
