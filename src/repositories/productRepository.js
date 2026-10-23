@@ -3,9 +3,7 @@ import { supabase } from "../config/db.js";
 
 export async function findAllProducts() {
     const { data, error } = await supabase
-        .from("products")
-        .select("id, name, price")
-        .order("id");
+        .rpc("get_all_products");
 
     if (error) {
         throw new Error(error.message);

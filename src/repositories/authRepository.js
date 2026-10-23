@@ -3,14 +3,14 @@ import { adminSupabase } from "../config/clientDB.js";
 
 export async function findStaffByStaffId(staffId) {
     const { data, error } = await adminSupabase
-        .from("staff")
-        .select("id, staff_id, auth_user_id")
-        .eq("staff_id", staffId)
-        .maybeSingle();
+    //calls the stored function
+        .rpc("get_staff_by_staff_id", {
+            p_staff_id: staffId
+        });
 
     if (error) {
         throw new Error(error.message);
     }
 
-    return data;
+    return data?.[0] ?? null;
 }
