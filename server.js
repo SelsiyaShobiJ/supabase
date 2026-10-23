@@ -7,8 +7,9 @@ import authRoutes from "./src/routes/authRoutes.js";
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Parse incoming JSON request bodies
-app.use(express.json());
+// Parse incoming JSON request bodies.so controller can access the values
+app.use(express.json()); //middleware
+//Serve static files from the public folder
 app.use(express.static("public"));
 
 // Register product API routes
