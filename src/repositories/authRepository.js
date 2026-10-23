@@ -1,5 +1,5 @@
 
-import { adminSupabase } from "../config/adminSupabase.js";
+import { adminSupabase } from "../config/clientDB.js";
 
 export async function findStaffByStaffId(staffId) {
     const { data, error } = await adminSupabase

@@ -1,5 +1,5 @@
 
-import { supabase } from "../config/supabase.js";
+import { supabase } from "../config/db.js";
 
 export async function findAllProducts() {
     const { data, error } = await supabase

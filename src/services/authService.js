@@ -1,7 +1,7 @@
 
-import { adminSupabase } from "../config/adminSupabase.js";
+import { adminSupabase } from "../config/clientDB.js";
 import { findStaffByStaffId } from "../repositories/authRepository.js";
-import { supabase } from "../config/supabase.js";
+import { supabase } from "../config/db.js";
 
 export async function authenticateStaff(staffId, password) {
     // Step 1: Find the staff record
