@@ -10,6 +10,9 @@ export class Product {
     /**
      * @param {ProductType} product
      */
+    #id;
+    #name;
+    #price;
     constructor(product) {
         this.id = Number(product.id);
         this.name = product.name;
